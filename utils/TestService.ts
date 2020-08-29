@@ -55,7 +55,12 @@ export class TestService implements articleDao {
   };
 
   async getAllArticles(): Promise<Article[]> {
-    const result = [...this.articles];
+    const result = [...this.articles].sort((a, b) => {
+      const aTime = new Date(a.timePublished).getTime();
+      const bTime = new Date(b.timePublished).getTime();
+
+      return bTime - aTime;
+    });
     return this.#withoutContent(result);
   }
   async getArticlesByCategory(categoryId: number): Promise<Article[]> {
