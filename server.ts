@@ -1,8 +1,9 @@
-import { App, Request, Response, staticServe } from "./deps.ts";
+import { App, Request, Response, staticServe, attainCors } from "./deps.ts";
 import api from "./utils/routes.ts";
 
 const app = new App();
 
+app.use(attainCors());
 app.use(staticServe("client/dist"));
 
 app.use("/api/articles", api);
