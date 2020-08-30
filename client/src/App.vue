@@ -23,12 +23,15 @@ export default {
   box-sizing: border-box;
 }
 
+body {
+   background: #ededed;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background: #ededed;
   color: #2c3e50;
 }
 </style>
