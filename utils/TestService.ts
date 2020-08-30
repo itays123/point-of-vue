@@ -1,4 +1,10 @@
-import { articleDao, Article, ArticleWithContent, Comment } from "../types.ts";
+import {
+  articleDao,
+  Article,
+  ArticleWithContent,
+  Comment,
+  Author,
+} from "../types.ts";
 
 let testArticles = [
   {
@@ -6,7 +12,7 @@ let testArticles = [
     title: "article1",
     timePublished: new Date(2020, 6, 8).toISOString(),
     markdown: "mama-mia, pizza pizza! ## which is why....",
-    authorId: 1,
+    author: 1,
     comments: [],
     categories: [1, 2, 3],
   },
@@ -15,7 +21,7 @@ let testArticles = [
     title: "article2",
     timePublished: new Date(2020, 7, 11).toISOString(),
     markdown: '<span style="background: lightblue">Marked content</span>',
-    authorId: 1,
+    author: 1,
     comments: [],
     categories: [2, 3, 5, 7],
   },
@@ -24,7 +30,7 @@ let testArticles = [
     title: "article3",
     timePublished: new Date(2020, 3, 9).toISOString(),
     markdown: "a random article",
-    authorId: 1,
+    author: 1,
     comments: [],
     categories: [8, 7, 6],
   },
@@ -33,25 +39,38 @@ let testArticles = [
     title: "article4",
     timePublished: new Date(2020, 0, 31).toISOString(),
     markdown: "Biden 2020!\n Trump 2020! ### COVID-19",
-    authorId: 1,
+    author: 1,
     comments: [],
     categories: [1, 2, 3, 4],
   },
 ];
 
+let authors: Map<number, Author> = new Map();
+authors.set(1, {
+  id: 1,
+  name: "itay schechner",
+});
+
 export class TestService implements articleDao {
   private articles: ArticleWithContent[];
+  private authors: Map<number, Author>;
   constructor() {
     this.articles = testArticles;
+    this.authors = authors;
   }
   #withoutContent = (articles: ArticleWithContent[]): Article[] => {
-    return articles.map(({ id, title, timePublished, authorId, imageUrl }) => ({
+    return articles.map(({ id, title, timePublished, author, imageUrl }) => ({
       id,
       title,
       timePublished,
-      authorId,
+      author: this.#withAuthorData(author),
       imageUrl,
     }));
+  };
+  #withAuthorData = (author: number | Author): Author => {
+    if (typeof author === "number") {
+      return this.authors.get(author)!;
+    } else return author;
   };
 
   async getAllArticles(): Promise<Article[]> {
@@ -70,7 +89,7 @@ export class TestService implements articleDao {
     return this.#withoutContent(result);
   }
   async getArticlesByAuthor(authorId: number): Promise<Article[]> {
-    const result = [...this.articles].filter((a) => a.authorId === authorId);
+    const result = [...this.articles].filter((a) => a.author === authorId);
     return this.#withoutContent(result);
   }
   async getRecentArticles(): Promise<Article[]> {
@@ -85,7 +104,8 @@ export class TestService implements articleDao {
   async getArticleById(id: number): Promise<ArticleWithContent> {
     const result = this.articles.find((a) => a.id === id);
     if (!result) throw new Error("article not found");
-    return result;
+    const author = this.#withAuthorData(result.author);
+    return { ...result, author };
   }
   async comment(articleId: number, comment: Comment) {
     const index = this.articles.findIndex(({ id }) => articleId === id);

@@ -11,7 +11,7 @@ export type ArticleWithContent = {
   title: string;
   markdown: string;
   categories: number[];
-  authorId: number;
+  author: number | Author;
   comments: Comment[];
   timePublished: string;
   imageUrl?: string;
@@ -21,7 +21,13 @@ export type Article = {
   id: number;
   title: string;
   timePublished: string;
-  authorId: number;
+  author: number | Author;
+  imageUrl?: string;
+};
+
+export type Author = {
+  id: number;
+  name: string;
   imageUrl?: string;
 };
 
