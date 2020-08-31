@@ -6,7 +6,7 @@
         <h1>Point Of Vue</h1>
       </router-link>
     </div>
-    <div class="categories">
+    <div class="categories" v-if="!$route.fullPath.includes('/article')">
       <router-link to="/category/1">Israel News</router-link> |
       <router-link to="/category/2">World</router-link> |
       <router-link to="/category/3">COVID-19</router-link> |

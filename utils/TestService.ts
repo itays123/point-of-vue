@@ -11,7 +11,7 @@ let testArticles = [
     id: 1,
     title: "article1",
     timePublished: new Date(2020, 6, 8).toISOString(),
-    markdown: "mama-mia, pizza pizza! ## which is why....",
+    markdown: "mama-mia, pizza pizza! \n## which is why....",
     author: 1,
     comments: [],
     categories: [1, 2, 3],
