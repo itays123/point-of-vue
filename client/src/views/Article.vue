@@ -9,7 +9,11 @@
       <div class="author-date">
           <div class="image" :style="authorStyle"></div>
           <div class="data">
-              <p v-if="article.author">{{ article.author.name }}</p>
+              <p v-if="article.author">
+                <router-link :to="`/author/${article.author.id}`">
+                  {{ article.author.name }}
+                </router-link>
+              </p>
               <p>{{ date }}</p>
           </div>
       </div>
@@ -172,8 +176,10 @@ export default {
     margin-left: 0.5rem;
 }
 
-.author-date .data p:first-child {
+.author-date .data p:first-child a {
     text-transform: capitalize;
+    text-decoration: none;
+    color: inherit;
 }
 
 .article .text {
