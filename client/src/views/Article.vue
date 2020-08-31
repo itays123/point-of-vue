@@ -15,7 +15,18 @@
       </div>
       <Markdown :markdown="article.markdown" />
     </div>
-    <div class="comments"></div>
+    <div class="comments" v-if="article.comments">
+      <div class="comment-container">
+        <h1>Comments</h1>
+      </div>
+      <div class="comment-container" v-for="comment of article.comments" :key="comment.id">
+        <Comment :comment="comment" />
+      </div>
+      <div class="comment-container add">
+        <h2>Add your own comment</h2>
+        <AddComment :articleId="$route.params.id" :handleAdd="handleAdd" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,6 +34,8 @@
 // @ is an alias to /src
 import API from '@/utils'
 import Markdown from '../components/Markdown.vue'
+import Comment from '../components/Comment.vue'
+import AddComment from '../components/AddComment.vue'
 import moment from 'moment'
 
 export default {
@@ -43,15 +56,17 @@ export default {
         .then(({ article }) => {
           this.article = article
         })
+    },
+    handleAdd (comment) {
+      if (this.article.comments) {
+        this.article.comments.push(comment)
+      }
     }
   },
   components: {
-    Markdown
-  },
-  watch: {
-    article () {
-      console.log(this.article)
-    }
+    Markdown,
+    Comment,
+    AddComment
   },
   computed: {
     date () {
@@ -82,32 +97,32 @@ export default {
 }
 
 .article .headings,
-.article .text {
+.article .text,
+.article .comment-container {
     width: 50%;
     margin: 0 auto;
 }
 
-.article .text {
-    padding-bottom: 5rem;
-}
-
 @media (max-width: 960px) {
     .article .headings,
-    .article .text {
+    .article .text,
+    .article .comment-container {
         width: 70%;
     }
 }
 
 @media (max-width: 760px) {
     .article .headings,
-    .article .text {
+    .article .text,
+    .article .comment-container {
         width: 80%;
     }
 }
 
 @media (max-width: 520px) {
     .article .headings,
-    .article .text {
+    .article .text,
+    .article .comment-container {
         width: 90%;
     }
 }
@@ -159,6 +174,19 @@ export default {
 
 .author-date .data p:first-child {
     text-transform: capitalize;
+}
+
+.article .text {
+  padding-bottom: 2rem;
+}
+
+.article .comments {
+  background: #ddd;
+  padding: 3rem 0;
+}
+
+.add.comment-container {
+  margin-top: 2rem;
 }
 
 </style>

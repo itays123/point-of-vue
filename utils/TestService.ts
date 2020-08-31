@@ -6,14 +6,22 @@ import {
   Author,
 } from "../types.ts";
 
-let testArticles = [
+let testArticles: ArticleWithContent[] = [
   {
     id: 1,
     title: "article1",
     timePublished: new Date(2020, 6, 8).toISOString(),
     markdown: "mama-mia, pizza pizza! \n## which is why....",
     author: 1,
-    comments: [],
+    comments: [
+      {
+        id: 1,
+        title: "a comment",
+        content: "the first comment",
+        timeSent: "2020-08-31T14:34:56.295Z",
+        sentBy: "anonymous",
+      },
+    ],
     categories: [1, 2, 3],
   },
   {
@@ -38,7 +46,7 @@ let testArticles = [
     id: 4,
     title: "article4",
     timePublished: new Date(2020, 0, 31).toISOString(),
-    markdown: "Biden 2020!\n Trump 2020! ### COVID-19",
+    markdown: "Biden 2020!\n Trump 2020! \n### COVID-19",
     author: 1,
     comments: [],
     categories: [1, 2, 3, 4],

@@ -34,4 +34,20 @@ body {
   text-align: center;
   color: #2c3e50;
 }
+
+::-moz-placeholder {
+  font-family: 'Roboto Slab', serif;
+}
+
+::-webkit-input-placeholder {
+  font-family: 'Roboto Slab', serif;
+}
+
+:-ms-input-placeholder {
+  font-family: 'Roboto Slab', serif;
+}
+
+::placeholder {
+    font-family: 'Roboto Slab', serif;
+}
 </style>
