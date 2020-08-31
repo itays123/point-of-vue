@@ -1,14 +1,16 @@
 <template>
     <div class="article article-data">
-        <img :src="article.imageUrl || 'https://dummyimage.com/600x400/aaaaaa/ffffff.png&text=article+image'" alt="img" />
-        <div class="content">
-            <h3 class="article-title">{{ article.title }}</h3>
-            <p class="article-author-date">
-                <span>{{ article.author.name }}</span>
-                <span> &#8226; </span>
-                <span>{{ date }}</span>
-            </p>
-        </div>
+        <router-link :to="`/article/${article.id}`">
+            <img :src="article.imageUrl || 'https://dummyimage.com/600x400/aaaaaa/ffffff.png&text=article+image'" alt="img" />
+            <div class="content">
+                <h3 class="article-title">{{ article.title }}</h3>
+                <p class="article-author-date">
+                    <span>{{ article.author.name }}</span>
+                    <span> &#8226; </span>
+                    <span>{{ date }}</span>
+                </p>
+            </div>
+        </router-link>
     </div>
 </template>
 
@@ -30,6 +32,11 @@ export default {
 </script>
 
 <style scoped>
+* {
+    text-decoration: none;
+    color: inherit;
+}
+
 .article-data {
     background: #fff;
     overflow: hidden;
