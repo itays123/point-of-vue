@@ -26,7 +26,8 @@ CREATE TABLE comments(
     content VARCHAR(255),
     title VARCHAR(255),
     timeSent VARCHAR(255),
-    sentBy VARCHAR(255)
+    sentBy VARCHAR(255),
+    articleId INTEGER
 );
 
 INSERT INTO categories (name) VALUES ('Israel');

@@ -1,10 +1,11 @@
 import { Router, Request, Response } from "../deps.ts";
 import { articleDao } from "../types.ts";
-import { TestService } from "./TestService.ts";
+import { PostgresService } from "./PostgresService.ts";
 
 const api = new Router();
 let dao: articleDao;
-dao = new TestService();
+//dao = new TestService();
+dao = await PostgresService.newInstance();
 
 api.get("/", async (req: Request, res: Response) => {
   const articles = await dao.getAllArticles();

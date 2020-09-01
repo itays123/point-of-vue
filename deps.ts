@@ -8,3 +8,4 @@ export {
 export { attainCors } from "https://deno.land/x/cors/mod.ts";
 export { Client } from "https://deno.land/x/postgres/mod.ts";
 export { QueryResult } from "https://deno.land/x/postgres/query.ts";
+export { readFileStr } from "https://deno.land/std/fs/mod.ts";

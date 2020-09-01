@@ -10,7 +10,7 @@ export type ArticleWithContent = {
   id: number;
   title: string;
   markdown: string;
-  categories: number[];
+  categories?: number[];
   author: number | Author;
   comments: Comment[];
   timePublished: string;
