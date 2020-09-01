@@ -6,6 +6,8 @@ const app = new App();
 app.use(attainCors());
 app.use(staticServe("client/dist"));
 
+app.use(staticServe("img"));
+
 app.use("/api/articles", api);
 
 app.use(async (req: Request, res: Response) => {
