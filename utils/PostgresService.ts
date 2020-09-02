@@ -92,7 +92,7 @@ export class PostgresService implements articleDao {
     const articles: any[] = await this.db.query({
       text:
         "SELECT id, title, authorId, timePublished, imageUrl FROM articles WHERE categories LIKE $1 ORDER BY timePublished DESC",
-      args: [categoryId],
+      args: [`%${categoryId}%`],
     });
     return await this.withAuthorAndImage(articles);
   }
@@ -120,12 +120,17 @@ export class PostgresService implements articleDao {
       text: "SELECT * FROM articles WHERE id = $1",
       args: [id],
     }))[0];
-    console.log(article);
-    const comments: Comment[] = await this.db.query({
+    const comments: Comment[] = (await this.db.query({
       text:
         "SELECT id, title, content, sentBy, timeSent FROM comments WHERE articleId = $1",
       args: [id],
-    });
+    })).map((comment: any) => ({
+      id: comment.id,
+      title: comment.title,
+      content: comment.content,
+      sentBy: comment.sentby,
+      timeSent: comment.timesent,
+    }));
     const author: Author = (await this.db.query({
       text: "SELECT * FROM authors WHERE id = $1",
       args: [article.authorid],
@@ -150,6 +155,16 @@ export class PostgresService implements articleDao {
     };
   }
   async comment(articleId: number, comment: Comment): Promise<void> {
-    throw new Error("Method not implemented.");
+    await this.db.query({
+      text:
+        "INSERT INTO comments (title, content, sentBy, timeSent, articleId) VALUES ($1, $2, $3, $4, $5)",
+      args: [
+        comment.title,
+        comment.content,
+        comment.sentBy,
+        comment.timeSent,
+        articleId,
+      ],
+    });
   }
 }
