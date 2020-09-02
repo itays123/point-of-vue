@@ -47,6 +47,8 @@ export default {
 
 .article-data img {
     width: 100%;
+    max-height: 200px;
+    object-fit: cover;
 }
 
 .article-data .content {

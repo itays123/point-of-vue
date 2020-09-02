@@ -20,9 +20,24 @@ export default {
 }
 </script>
 
-<style scoped>
-* {
+<style>
+.markdown * {
     text-align: start;
+    margin-bottom: 0.5rem;
+}
+
+.markdown img {
+  text-align: center;
+  margin: 0 auto 0.5rem;
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  margin-top: 2rem;
 }
 
 .markdown {

@@ -87,8 +87,9 @@ export default {
       } else return this.article.imageUrl
     },
     authorStyle () {
+      console.log(this.article.author)
       let image = 'https://dummyimage.com/100x100/aaaaaa/ffffff.png'
-      if (this.article.author?.imageUrl) image = this.article.author.imageUrl
+      if (this.article.author?.imageurl) image = this.article.author.imageurl
       return `background-image: url(${image})`
     }
   }
@@ -156,6 +157,8 @@ export default {
 .article img {
     width: 100%;
     max-width: 945px;
+    max-height: 400px;
+    object-fit: cover;
 }
 
 .author-date {
