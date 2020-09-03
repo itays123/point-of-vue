@@ -13,4 +13,4 @@ Just like Israelis, the people of the UAE had managed to grow and build develope
 <br /><span style="color: #aaa;">The Burj Khalifa. Photo by Shukhrat Umarov on Pexels.</span>
 
 ## An accomplishment?
-With that being said, this has been agreed while thousands are protesting against the current goverment in Israel. The Israeli Healthcare system had dealt with the virus so far, with around 700 deaths from the beggining of the pandemic, but the economy is at its worse with 1 million unemployed people (25%). Many say that the goverment has failed to deal with the pandemic, and this accomplishment may will cool down the toxic speech.
+With that being said, this has been agreed while thousands are protesting against the current goverment in Israel. The Israeli Healthcare system had dealt with the virus so far, with around 900 deaths from the beggining of the pandemic, but the economy is at its worse with 1 million unemployed people (25%). Many say that the goverment has failed to deal with the pandemic, and this accomplishment may will cool down the toxic speech.
