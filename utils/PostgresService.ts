@@ -8,6 +8,7 @@ import {
 import { Client, QueryResult, readFileStr } from "../deps.ts";
 import "https://deno.land/x/dotenv/load.ts";
 
+// helper database query class that parses the output into an array of object
 class DB {
   private db: Client;
   constructor() {
@@ -24,6 +25,7 @@ class DB {
     await this.db.connect();
   }
 
+  // O(rows * columns)
   private mapRows(result: QueryResult): any[] {
     let objects: any[] = [];
 
@@ -51,6 +53,7 @@ export class PostgresService implements articleDao {
   constructor() {
     this.db = new DB();
   }
+  // create new instance and connect to database
   static async newInstance(): Promise<PostgresService> {
     const service = new PostgresService();
     await service.connect();
@@ -60,6 +63,9 @@ export class PostgresService implements articleDao {
     await this.db.connect();
     return this;
   }
+
+  // add author data and image. O(number of articles * number of authors)
+  // although not the best practice
   private async withAuthorAndImage(articles: any[]): Promise<Article[]> {
     type inputType = {
       id: number;
@@ -72,6 +78,7 @@ export class PostgresService implements articleDao {
     const findAuthor = (authorId: number): Author =>
       authors.find((a) => a.id === authorId)!;
 
+    // map the articles to get the final output:
     return articles.map((
       { id, title, authorid, timepublished, imageurl }: inputType,
     ) => ({
@@ -108,6 +115,7 @@ export class PostgresService implements articleDao {
     return await this.getAllArticles();
   }
   async getArticleById(id: number): Promise<ArticleWithContent> {
+    // get article data
     type inputType = {
       id: number;
       title: string;
@@ -120,6 +128,7 @@ export class PostgresService implements articleDao {
       text: "SELECT * FROM articles WHERE id = $1",
       args: [id],
     }))[0];
+    // get comments
     const comments: Comment[] = (await this.db.query({
       text:
         "SELECT id, title, content, sentBy, timeSent FROM comments WHERE articleId = $1",
@@ -131,10 +140,12 @@ export class PostgresService implements articleDao {
       sentBy: comment.sentby,
       timeSent: comment.timesent,
     }));
+    // get author
     const author: Author = (await this.db.query({
       text: "SELECT * FROM authors WHERE id = $1",
       args: [article.authorid],
     }))[0];
+    // get markdown
     let markdown;
     try {
       markdown = await readFileStr(
@@ -144,6 +155,7 @@ export class PostgresService implements articleDao {
     } catch (err) {
       markdown = "";
     }
+    // return result
     return {
       id,
       title: article.title,
