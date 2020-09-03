@@ -2,7 +2,6 @@
   <div class="article">
     <div class="headings">
       <h1>{{ article.title }}</h1>
-      <h4>{{ article.subheading || 'a meaningless subheading, that filles the gap between the article\'s title and main picture' }}</h4>
     </div>
     <img :src="mainImage" />
     <div class="text">

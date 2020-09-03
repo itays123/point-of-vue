@@ -66,4 +66,14 @@ textarea {
 .submit {
     text-align: center;
 }
+
+.submit button {
+    border: none;
+    outline: none;
+    padding: 8px 16px;
+    border-radius: 16px;
+    color: #fff;
+    background: #2c3e50;
+    cursor: pointer;
+}
 </style>
