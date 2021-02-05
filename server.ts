@@ -15,3 +15,5 @@ app.use(async (req: Request, res: Response) => {
 });
 
 app.listen({ port: 3000 });
+
+console.log('listening...')
