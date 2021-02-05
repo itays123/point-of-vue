@@ -5,7 +5,7 @@ import {
   ArticleWithContent,
   Author,
 } from "../types.ts";
-import { Client, QueryResult, readFileStr } from "../deps.ts";
+import { Client } from "../deps.ts";
 import "https://deno.land/x/dotenv/load.ts";
 
 // helper database query class that parses the output into an array of object
@@ -25,26 +25,15 @@ class DB {
     await this.db.connect();
   }
 
-  // O(rows * columns)
-  private mapRows(result: QueryResult): any[] {
-    let objects: any[] = [];
-
-    result.rows.forEach((row: any) => {
-      let obj: any = {};
-
-      result.rowDescription.columns.forEach((column: any, index: number) => {
-        obj[column.name] = row[index];
-      });
-
-      objects.push(obj);
-    });
-
-    return objects;
-  }
   async query(query: { text: string; args: any[] } | string): Promise<any> {
-    const result = await this.db.query(query);
-    const data = this.mapRows(result);
-    return data;
+    if (typeof query === 'object') {
+      const result = await this.db.queryObject(query);
+      return result.rows;
+    }
+    else {
+      const result = await this.db.queryObject(query);
+      return result.rows;
+    }
   }
 }
 
@@ -148,9 +137,8 @@ export class PostgresService implements articleDao {
     // get markdown
     let markdown;
     try {
-      markdown = await readFileStr(
-        `./${article.markdownurl}`,
-        { encoding: "utf8" },
+      markdown = await Deno.readTextFile(
+        `./${article.markdownurl}`
       );
     } catch (err) {
       markdown = "";

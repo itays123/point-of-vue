@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  server:
+    container_name: POV-server
+    restart: always
+    build: .
+    ports:
+      - '4000:4000'
+      - '5432:5432'
