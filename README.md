@@ -2,6 +2,8 @@
 
 a newspaper website, built with the power of Deno and Vue.js
 
+**Note: As of February 2021, boostraping this project will not work due to Deno updates. Will fix soon.**
+
 ## Routes and pages
 
 ### Frontend
